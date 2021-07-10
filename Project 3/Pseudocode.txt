@@ -1,0 +1,33 @@
+// reading data process is not covered here
+// relocation cost is shown by "f"(as in project document)
+// consider "n" as number of months and "k" as number of cities
+Define dp[n][k]
+Define trace[n][k]
+
+for i = 1 to k+1(number of cities)
+    dp[i][1] = cost[i][1]
+
+for j = 2 to n+1(number of months)
+    for i = 1 to k+1
+        mini = 0
+        for m = 1 to k+1
+            if mini == 0 or (mini > dp[m][j-1] + f[m][i])
+                mini = dp[m][j-1] +f[m][i]
+                dp[i][j] = dp[m][j-1] +f[m][i]
+                trace[i][j] = m
+        dp[i][j] += cost[i][j]
+// minimum of the last column will be optimized answer
+mini = 0 // in order to calculate minimum cost
+num = 0 // in which city trace ended
+for i = 1 to k+1 :
+    if mini == 0 or mini > dp[i][n]:
+        mini = dp[i][n]
+        num = i
+print mini
+path = [num]
+// print the path
+for i = n to 1 
+    path.append(trace[num][i])
+    num = trace[num][i]
+for i = (lengthOf(path) - 1) to -1
+    print(path[i])
